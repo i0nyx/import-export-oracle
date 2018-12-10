@@ -1,8 +1,7 @@
 package by.intexsoft.importexport.service.impl;
 
 import by.intexsoft.importexport.pojo.TypeEvent;
-import by.intexsoft.importexport.service.ConvertService;
-import by.intexsoft.importexport.service.EventService;
+import by.intexsoft.importexport.service.IEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,17 +11,17 @@ import java.util.Map;
 import static com.google.common.collect.Maps.newHashMap;
 
 @Service
-public class IConvertService implements ConvertService {
-    private Map<TypeEvent, EventService> map;
+public class ConvertService implements by.intexsoft.importexport.service.IConvertService {
+    private Map<TypeEvent, IEventService> map;
 
     @Autowired
-    public IConvertService(final List<EventService> lists) {
+    public ConvertService(final List<IEventService> lists) {
         map = newHashMap();
         lists.forEach(eventService -> map.put(eventService.getType(), eventService));
     }
 
     @Override
-    public EventService chooseEventService(final TypeEvent event) {
+    public IEventService chooseEventService(final TypeEvent event) {
         return map.get(event);
     }
 }

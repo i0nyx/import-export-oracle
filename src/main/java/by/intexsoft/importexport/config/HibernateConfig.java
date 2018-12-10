@@ -16,8 +16,8 @@ import java.util.Properties;
 @EnableTransactionManagement(proxyTargetClass = true)
 @ComponentScan("by.intexsoft.importexport")
 @PropertySources({@PropertySource("classpath:oracle.properties"),
-                  @PropertySource("classpath:hibernate.properties")})
-@EnableJpaRepositories("by.intexsoft.importexport.repositories")
+        @PropertySource("classpath:hibernate.properties")})
+@EnableJpaRepositories("by.intexsoft.importexport.repository")
 public class HibernateConfig {
     private static final String HIBERNATE_DIALECT = "hibernate.dialect";
     private static final String HIBERNATE_SHOW_SQL = "hibernate.show_sql";

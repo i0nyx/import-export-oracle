@@ -2,8 +2,8 @@ package by.intexsoft.importexport.service.impl;
 
 import by.intexsoft.importexport.pojo.Sms;
 import by.intexsoft.importexport.pojo.TypeEvent;
-import by.intexsoft.importexport.repositories.SmsRepository;
-import by.intexsoft.importexport.service.EventService;
+import by.intexsoft.importexport.repository.SmsRepository;
+import by.intexsoft.importexport.service.IEventService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVRecord;
@@ -16,13 +16,11 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 @Slf4j
 @Service
 @Transactional
 @AllArgsConstructor
-public class ISmsService implements EventService<Sms> {
+public class SmsServiceI implements IEventService<Sms> {
     private final SmsRepository smsRepository;
 
     @Override
@@ -49,6 +47,12 @@ public class ISmsService implements EventService<Sms> {
     }
 
     @Override
+    public void clearTable() {
+        smsRepository.deleteAll();
+        log.info("clear sms table success");
+    }
+
+    @Override
     public void convertOfCsvRecordToEventAndSave(final List<CSVRecord> list) {
         Optional.ofNullable(list).orElseThrow(() -> new IllegalArgumentException("List<CSVRecords> should not be null!"));
         saveList(list.stream()
@@ -63,18 +67,5 @@ public class ISmsService implements EventService<Sms> {
         return Sms.builder().code(UUID.fromString(record.get("uuid")).toString())
                 .date(LocalDate.parse(record.get("date")))
                 .build();
-    }
-
-    @Override
-    public List<List<String>> convertToListString() {
-        final List<Sms> listEvent = getAll();
-        List<List<String>> listStr = newArrayList();
-        for (Sms sms : listEvent) {
-            List<String> strings = newArrayList();
-            strings.add(sms.getCode());
-            strings.add(sms.getDate().toString());
-            listStr.add(strings);
-        }
-        return listStr;
     }
 }

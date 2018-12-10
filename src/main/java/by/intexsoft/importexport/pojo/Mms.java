@@ -1,9 +1,6 @@
 package by.intexsoft.importexport.pojo;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -14,7 +11,8 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Mms {
+@EqualsAndHashCode(callSuper = true)
+public class Mms extends Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;

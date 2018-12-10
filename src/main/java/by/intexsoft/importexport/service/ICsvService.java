@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
-public interface CsvService {
+public interface ICsvService {
     List<CSVRecord> readCsvAndConvertToListRecords(Reader csvFile, TypeEvent type) throws IOException;
     void writeCsv(FileWriter writer, final TypeEvent typeEvent) throws IOException;
 }

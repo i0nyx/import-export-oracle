@@ -1,7 +1,7 @@
 package by.intexsoft.importexport.shell;
 
-import by.intexsoft.importexport.service.ExportEventService;
-import by.intexsoft.importexport.service.ImportEventService;
+import by.intexsoft.importexport.service.IExportEventService;
+import by.intexsoft.importexport.service.IImportEventService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.shell.core.CommandMarker;
@@ -15,8 +15,8 @@ import java.io.IOException;
 @Component
 @AllArgsConstructor
 public class ShellCommand implements CommandMarker {
-    private final ImportEventService importService;
-    private final ExportEventService exportService;
+    private final IImportEventService importService;
+    private final IExportEventService exportService;
 
     @CliCommand(value="import", help = "import events to database")
     public String importCsv(@CliOption(key={"p"}, mandatory = true, help = "enter path to file")final String path) throws IOException {

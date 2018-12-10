@@ -2,8 +2,8 @@ package by.intexsoft.importexport.service.impl;
 
 import by.intexsoft.importexport.pojo.Mms;
 import by.intexsoft.importexport.pojo.TypeEvent;
-import by.intexsoft.importexport.repositories.MmsRepository;
-import by.intexsoft.importexport.service.EventService;
+import by.intexsoft.importexport.repository.MmsRepository;
+import by.intexsoft.importexport.service.IEventService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVRecord;
@@ -16,13 +16,11 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 @Slf4j
 @Service
 @Transactional
 @AllArgsConstructor
-public class IMmsService implements EventService<Mms> {
+public class MmsServiceI implements IEventService<Mms> {
     private final MmsRepository mmsRepository;
 
     @Override
@@ -41,6 +39,12 @@ public class IMmsService implements EventService<Mms> {
     @Override
     public TypeEvent getType() {
         return TypeEvent.MMS;
+    }
+
+    @Override
+    public void clearTable() {
+        mmsRepository.deleteAll();
+        log.info("truncate mms table success");
     }
 
     @Override
@@ -63,18 +67,5 @@ public class IMmsService implements EventService<Mms> {
         return Mms.builder().code(UUID.fromString(record.get("code")).toString())
                 .date(LocalDate.parse(record.get("date")))
                 .build();
-    }
-
-    @Override
-    public List<List<String>> convertToListString() {
-        final List<Mms> listMms = getAll();
-        List<List<String>> listStr = newArrayList();
-        for (Mms mms : listMms) {
-            List<String> strings = newArrayList();
-            strings.add(mms.getCode());
-            strings.add(mms.getDate().toString());
-            listStr.add(strings);
-        }
-        return listStr;
     }
 }

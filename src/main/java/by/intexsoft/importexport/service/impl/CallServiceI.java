@@ -2,8 +2,8 @@ package by.intexsoft.importexport.service.impl;
 
 import by.intexsoft.importexport.pojo.Call;
 import by.intexsoft.importexport.pojo.TypeEvent;
-import by.intexsoft.importexport.repositories.CallRepository;
-import by.intexsoft.importexport.service.EventService;
+import by.intexsoft.importexport.repository.CallRepository;
+import by.intexsoft.importexport.service.IEventService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVRecord;
@@ -16,13 +16,11 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static com.google.common.collect.Lists.newArrayList;
-
 @Slf4j
 @Service
 @Transactional
 @AllArgsConstructor
-public class ICallService implements EventService<Call> {
+public class CallServiceI implements IEventService<Call> {
     private final CallRepository callRepository;
 
     @Override
@@ -33,6 +31,7 @@ public class ICallService implements EventService<Call> {
     }
 
     @Override
+    @Transactional
     public void save(Call call) {
         Optional.ofNullable(call).orElseThrow(() -> new IllegalArgumentException("Call should not be null"));
         callRepository.save(call);
@@ -50,6 +49,12 @@ public class ICallService implements EventService<Call> {
     }
 
     @Override
+    public void clearTable() {
+        callRepository.deleteAll();
+        log.info("clear call table success");
+    }
+
+    @Override
     public void convertOfCsvRecordToEventAndSave(final List<CSVRecord> list) {
         Optional.ofNullable(list).orElseThrow(() -> new IllegalArgumentException("List<CSVRecords> should not be null!"));
         saveList(list.stream()
@@ -64,17 +69,5 @@ public class ICallService implements EventService<Call> {
         return Call.builder().code(UUID.fromString(record.get("code")).toString())
                     .date(LocalDate.parse(record.get("date")))
                     .build();
-    }
-
-    @Override
-    public List<List<String>> convertToListString() {
-        List<List<String>> listStr = newArrayList();
-        getAll().forEach(call -> {
-            List<String> strings = newArrayList();
-            strings.add(call.getCode());
-            strings.add(call.getDate().toString());
-            listStr.add(strings);
-        });
-        return listStr;
     }
 }

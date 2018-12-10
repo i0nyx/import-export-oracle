@@ -1,4 +1,4 @@
-package by.intexsoft.importexport.Util;
+package by.intexsoft.importexport.util;
 
 import by.intexsoft.importexport.pojo.TypeEvent;
 import by.intexsoft.importexport.pojo.TypeExtension;

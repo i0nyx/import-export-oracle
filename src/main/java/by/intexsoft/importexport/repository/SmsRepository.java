@@ -1,4 +1,4 @@
-package by.intexsoft.importexport.repositories;
+package by.intexsoft.importexport.repository;
 
 import by.intexsoft.importexport.pojo.Sms;
 import org.springframework.data.jpa.repository.JpaRepository;
