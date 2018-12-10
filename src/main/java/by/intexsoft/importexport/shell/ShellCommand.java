@@ -45,4 +45,11 @@ public class ShellCommand implements CommandMarker {
         }
         return "truncate false";
     }
+
+    @CliCommand(value = "generate", help = "generate data to table by type")
+    public String generateData(@CliOption(key = {"t"}, mandatory = true, help = "enter event type")final String eventType,
+                               @CliOption(key = {"c"}, help = "count of data")final int count){
+
+        return "generate data success";
+    }
 }
