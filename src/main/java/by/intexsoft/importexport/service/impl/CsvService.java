@@ -17,12 +17,14 @@ import java.io.Reader;
 import java.util.Arrays;
 import java.util.List;
 
+import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_CODE;
+
 @Slf4j
 @Service
 @AllArgsConstructor
 public class CsvService implements by.intexsoft.importexport.service.ICsvService {
     private final IConvertService convertService;
-    private final String[] header = {"code", "date"};
+    private final String[] header = {EVENT_FIELD_CODE, EVENT_FIELD_CODE};
 
     public List<CSVRecord> readCsvAndConvertToListRecords(final Reader csvFile, final TypeEvent type) throws IOException {
         CSVFormat format = CSVFormat.DEFAULT.withHeader(header).withSkipHeaderRecord(true);

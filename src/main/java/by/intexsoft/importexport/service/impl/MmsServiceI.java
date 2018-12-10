@@ -16,6 +16,9 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_CODE;
+import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_DATE;
+
 @Slf4j
 @Service
 @Transactional
@@ -56,7 +59,7 @@ public class MmsServiceI implements IEventService<Mms> {
     public void convertOfCsvRecordToEventAndSave(final List<CSVRecord> list) {
         Optional.ofNullable(list).orElseThrow(() -> new IllegalArgumentException("List<CSVRecords> should not be null!"));
         saveList(list.stream()
-                .filter(record -> mmsRepository.findMmsByCode(record.get("code"))==null)
+                .filter(record -> mmsRepository.findMmsByCode(record.get(EVENT_FIELD_CODE)) == null)
                 .map(this::buildEventByType)
                 .collect(Collectors.toList()));
     }
@@ -64,8 +67,8 @@ public class MmsServiceI implements IEventService<Mms> {
     @Override
     public Mms buildEventByType(final CSVRecord record) {
         Optional.ofNullable(record).orElseThrow(() -> new IllegalArgumentException("should not be null"));
-        return Mms.builder().code(UUID.fromString(record.get("code")).toString())
-                .date(LocalDate.parse(record.get("date")))
+        return Mms.builder().code(UUID.fromString(record.get(EVENT_FIELD_CODE)).toString())
+                .date(LocalDate.parse(record.get(EVENT_FIELD_DATE)))
                 .build();
     }
 }
