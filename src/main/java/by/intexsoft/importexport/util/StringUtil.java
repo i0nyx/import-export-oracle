@@ -17,7 +17,7 @@ public final class StringUtil {
         return name;
     }
 
-    private static boolean checkTypeEvent(String type){
+    public static boolean checkTypeEvent(String type){
         AtomicBoolean b = new AtomicBoolean(false);
         Arrays.stream(TypeEvent.values()).forEach(event ->{
             if(!b.get() && event.toString().equalsIgnoreCase(type)){
