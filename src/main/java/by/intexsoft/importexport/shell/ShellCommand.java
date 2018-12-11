@@ -24,9 +24,13 @@ public class ShellCommand implements CommandMarker {
 
     @CliCommand(value = "import", help = "import events to database")
     public String importCsv(@CliOption(key = {"p"}, mandatory = true, help = "enter path to file") final String path) throws IOException {
-        importService.checkAndImport(path);
-        log.info("import file to path {} success", path);
-        return "import success";
+        StringUtil.checkFileExtension(path);
+        String typeStr = StringUtil.getStringType(path).toUpperCase();
+        if(StringUtil.checkTypeEvent(typeStr)){
+            importService.importOfCsv(path, TypeEvent.valueOf(typeStr));
+            return "import success";
+        }
+        return "import false";
     }
 
     @CliCommand(value = "export", help = "export events of database")
