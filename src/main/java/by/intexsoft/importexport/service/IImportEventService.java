@@ -1,7 +1,9 @@
 package by.intexsoft.importexport.service;
 
+import by.intexsoft.importexport.pojo.TypeEvent;
+
 import java.io.IOException;
 
 public interface IImportEventService {
-    void checkAndImport(final String path) throws IOException;
+    void importOfCsv(final String path, final TypeEvent typeEvent) throws IOException;
 }

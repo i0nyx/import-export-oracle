@@ -1,10 +1,9 @@
 package by.intexsoft.importexport.service.impl;
 
-import by.intexsoft.importexport.service.IImportEventService;
-import by.intexsoft.importexport.util.StringUtil;
 import by.intexsoft.importexport.pojo.TypeEvent;
 import by.intexsoft.importexport.service.IConvertService;
 import by.intexsoft.importexport.service.ICsvService;
+import by.intexsoft.importexport.service.IImportEventService;
 import lombok.AllArgsConstructor;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Component;
@@ -20,10 +19,8 @@ public class ImportEventService implements IImportEventService {
     private final IConvertService convertService;
 
     @Override
-    public void checkAndImport(final String path) throws IOException {
-        StringUtil.checkFileExtension(path);
-        TypeEvent type = TypeEvent.valueOf(StringUtil.getStringType(path).toUpperCase());
-        List<CSVRecord> csvRecords = csvService.readCsvAndConvertToListRecords(new FileReader(path), type);
-        convertService.chooseEventService(type).convertOfCsvRecordToEventAndSave(csvRecords);
+    public void importOfCsv(final String path, final TypeEvent typeEvent) throws IOException {
+        List<CSVRecord> csvRecords = csvService.readCsvAndConvertToListRecords(new FileReader(path), typeEvent);
+        convertService.chooseEventService(typeEvent).convertOfCsvRecordToEventAndSave(csvRecords);
     }
 }

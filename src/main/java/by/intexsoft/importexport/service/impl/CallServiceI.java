@@ -4,6 +4,7 @@ import by.intexsoft.importexport.pojo.Call;
 import by.intexsoft.importexport.pojo.TypeEvent;
 import by.intexsoft.importexport.repository.CallRepository;
 import by.intexsoft.importexport.service.IEventService;
+import by.intexsoft.importexport.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVRecord;
@@ -60,15 +61,23 @@ public class CallServiceI implements IEventService<Call> {
         Optional.ofNullable(list).orElseThrow(() -> new IllegalArgumentException("List<CSVRecords> should not be null!"));
         saveList(list.stream()
                 .filter(record -> callRepository.findCallByCode(record.get(EVENT_FIELD_CODE)) == null)
-                .map(this::buildEventByType)
+                .map(this::buildEventByTypeOfCsvRecord)
                 .collect(Collectors.toList()));
     }
 
     @Override
-    public Call buildEventByType(final CSVRecord record) {
+    public Call buildEventByTypeOfCsvRecord(final CSVRecord record) {
         Optional.ofNullable(record).orElseThrow(() -> new IllegalArgumentException("should not be null!"));
         return Call.builder().code(UUID.fromString(record.get(EVENT_FIELD_CODE)).toString())
                 .date(LocalDate.parse(record.get(EVENT_FIELD_DATE)))
                 .build();
+    }
+
+    @Override
+    public Call buildEventByType(String code, final LocalDate localDate) {
+        if(!StringUtil.checkString(code)){
+            code = UUID.randomUUID().toString();
+        }
+        return Call.builder().code(code).date(localDate).build();
     }
 }
