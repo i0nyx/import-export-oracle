@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static java.util.Objects.isNull;
+
 public final class StringUtil {
     public static String getStringType(final String path) {
         String name = new File(path).getName().split("_")[0];
@@ -44,5 +46,9 @@ public final class StringUtil {
         if (!b.get()) {
             throw new IllegalArgumentException("incorrect file format -- " + extension);
         }
+    }
+
+    public static boolean checkString(final String str){
+        return !isNull(str) && !str.isEmpty();
     }
 }

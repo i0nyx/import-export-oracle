@@ -1,9 +1,11 @@
 package by.intexsoft.importexport.service.impl;
 
+import by.intexsoft.importexport.pojo.Call;
 import by.intexsoft.importexport.pojo.Mms;
 import by.intexsoft.importexport.pojo.TypeEvent;
 import by.intexsoft.importexport.repository.MmsRepository;
 import by.intexsoft.importexport.service.IEventService;
+import by.intexsoft.importexport.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVRecord;
@@ -60,15 +62,23 @@ public class MmsServiceI implements IEventService<Mms> {
         Optional.ofNullable(list).orElseThrow(() -> new IllegalArgumentException("List<CSVRecords> should not be null!"));
         saveList(list.stream()
                 .filter(record -> mmsRepository.findMmsByCode(record.get(EVENT_FIELD_CODE)) == null)
-                .map(this::buildEventByType)
+                .map(this::buildEventByTypeOfCsvRecord)
                 .collect(Collectors.toList()));
     }
 
     @Override
-    public Mms buildEventByType(final CSVRecord record) {
+    public Mms buildEventByTypeOfCsvRecord(final CSVRecord record) {
         Optional.ofNullable(record).orElseThrow(() -> new IllegalArgumentException("should not be null"));
         return Mms.builder().code(UUID.fromString(record.get(EVENT_FIELD_CODE)).toString())
                 .date(LocalDate.parse(record.get(EVENT_FIELD_DATE)))
                 .build();
+    }
+
+    @Override
+    public Mms buildEventByType(String code, LocalDate localDate) {
+        if(!StringUtil.checkString(code)){
+            code = UUID.randomUUID().toString();
+        }
+        return Mms.builder().code(code).date(localDate).build();
     }
 }
