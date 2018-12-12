@@ -5,12 +5,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * Class containing properties of call
+ */
+@Data
 @Table
 @Entity
-@Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Call extends Event {
     @Id
@@ -21,3 +22,4 @@ public class Call extends Event {
     @Column(name = "dates")
     private LocalDate date;
 }
+

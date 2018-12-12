@@ -8,7 +8,27 @@ import java.io.IOException;
 import java.io.Reader;
 import java.util.List;
 
+/**
+ * Describes methods for reading and writing csv files
+ */
+@SuppressWarnings("JavaDoc")
 public interface ICsvService {
+    /**
+     * Method read csv file and convert in {@link List<CSVRecord>}
+     *
+     * @param csvFile file
+     * @param type    type event
+     * @return {@link List<CSVRecord>}
+     * @throws IOException
+     */
     List<CSVRecord> readCsvAndConvertToListRecords(Reader csvFile, TypeEvent type) throws IOException;
+
+    /**
+     * writes data of event in file
+     *
+     * @param writer    file
+     * @param typeEvent event type
+     * @throws IOException
+     */
     void writeCsv(FileWriter writer, final TypeEvent typeEvent) throws IOException;
 }
