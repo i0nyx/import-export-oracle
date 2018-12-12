@@ -12,6 +12,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * {@inheritDoc}
+ */
 @Component
 @AllArgsConstructor
 public class ImportEventService implements IImportEventService {

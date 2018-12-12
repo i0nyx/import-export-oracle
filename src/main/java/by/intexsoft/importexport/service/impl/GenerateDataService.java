@@ -14,6 +14,9 @@ import java.util.List;
 
 import static com.google.common.collect.Lists.newArrayList;
 
+/**
+ * {@inheritDoc}
+ */
 @Service
 @AllArgsConstructor
 public class GenerateDataService implements IGenerateDataService {

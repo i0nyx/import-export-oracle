@@ -20,6 +20,9 @@ import java.util.stream.Collectors;
 import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_CODE;
 import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_DATE;
 
+/**
+ * {@inheritDoc}
+ */
 @Slf4j
 @Service
 @Transactional
@@ -75,7 +78,7 @@ public class SmsServiceI implements IEventService<Sms> {
 
     @Override
     public Sms buildEventByType(String code, final LocalDate localDate) {
-        if(!StringUtil.checkString(code)){
+        if (!StringUtil.checkString(code)) {
             code = UUID.randomUUID().toString();
         }
         return Sms.builder().code(code).date(localDate).build();

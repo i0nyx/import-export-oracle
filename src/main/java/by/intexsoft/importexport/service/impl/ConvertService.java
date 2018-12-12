@@ -10,6 +10,9 @@ import java.util.Map;
 
 import static com.google.common.collect.Maps.newHashMap;
 
+/**
+ * {@inheritDoc}
+ */
 @Service
 public class ConvertService implements by.intexsoft.importexport.service.IConvertService {
     private Map<TypeEvent, IEventService> map;

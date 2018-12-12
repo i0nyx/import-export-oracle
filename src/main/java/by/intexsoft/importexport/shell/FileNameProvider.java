@@ -5,6 +5,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.shell.plugin.support.DefaultHistoryFileNameProvider;
 import org.springframework.stereotype.Component;
 
+/**
+ * {@inheritDoc}
+ */
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class FileNameProvider extends DefaultHistoryFileNameProvider {
