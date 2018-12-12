@@ -10,14 +10,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 
+/**
+ * {@inheritDoc}
+ */
 @Service
 @AllArgsConstructor
 public class ExportServiceService implements IExportEventService {
     private final ICsvService csvService;
 
-    public void exportToCsv(final String typeStr) throws IOException {
-        String csvName = String.format("D:/%s_%s.csv", typeStr.toUpperCase(), LocalDate.now());
+    public void exportToCsv(final TypeEvent type) throws IOException {
+        String csvName = String.format("D:/%s_%s.csv", type.toString(), LocalDate.now());
         FileWriter writer = new FileWriter(csvName);
-        csvService.writeCsv(writer, TypeEvent.valueOf(typeStr.toUpperCase()));
+        csvService.writeCsv(writer, type);
     }
 }

@@ -20,6 +20,9 @@ import java.util.List;
 import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_CODE;
 import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_DATE;
 
+/**
+ * {@inheritDoc}
+ */
 @Slf4j
 @Service
 @AllArgsConstructor

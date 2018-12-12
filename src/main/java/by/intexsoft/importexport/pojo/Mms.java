@@ -5,12 +5,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * Class containing properties of mms
+ */
+@Data
 @Table
 @Entity
-@Data
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Mms extends Event {
     @Id

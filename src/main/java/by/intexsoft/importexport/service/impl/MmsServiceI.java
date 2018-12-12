@@ -1,6 +1,5 @@
 package by.intexsoft.importexport.service.impl;
 
-import by.intexsoft.importexport.pojo.Call;
 import by.intexsoft.importexport.pojo.Mms;
 import by.intexsoft.importexport.pojo.TypeEvent;
 import by.intexsoft.importexport.repository.MmsRepository;
@@ -21,6 +20,9 @@ import java.util.stream.Collectors;
 import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_CODE;
 import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_DATE;
 
+/**
+ * {@inheritDoc}
+ */
 @Slf4j
 @Service
 @Transactional
@@ -76,7 +78,7 @@ public class MmsServiceI implements IEventService<Mms> {
 
     @Override
     public Mms buildEventByType(String code, LocalDate localDate) {
-        if(!StringUtil.checkString(code)){
+        if (!StringUtil.checkString(code)) {
             code = UUID.randomUUID().toString();
         }
         return Mms.builder().code(code).date(localDate).build();

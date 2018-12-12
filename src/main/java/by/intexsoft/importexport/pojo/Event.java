@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+/**
+ * Abstract class events
+ */
 public abstract class Event {
     @Getter
     @Setter

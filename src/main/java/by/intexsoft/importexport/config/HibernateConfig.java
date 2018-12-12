@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.Properties;
 
+/**
+ * Hibernate configuration class
+ */
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = true)
 @ComponentScan("by.intexsoft.importexport")
@@ -39,6 +42,11 @@ public class HibernateConfig {
     @Value("${entitymanager.packages.to.scan}")
     private String pathPojo;
 
+    /**
+     * Create a {@link DriverManagerDataSource}
+     *
+     * @return {@link DataSource}
+     */
     @Bean
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -49,6 +57,12 @@ public class HibernateConfig {
         return dataSource;
     }
 
+    /**
+     * Create a {@link LocalContainerEntityManagerFactoryBean}
+     *
+     * @return {@link LocalContainerEntityManagerFactoryBean}
+     * @see #hibernateProperties()
+     */
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -59,6 +73,12 @@ public class HibernateConfig {
         return entityManagerFactoryBean;
     }
 
+    /**
+     * Create a {@link JpaTransactionManager}
+     *
+     * @return {@link JpaTransactionManager}
+     * @see #entityManagerFactory()
+     */
     @Bean
     public JpaTransactionManager transactionManager() {
         JpaTransactionManager transactionManager = new JpaTransactionManager();
