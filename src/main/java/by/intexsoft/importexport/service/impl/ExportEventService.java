@@ -15,7 +15,7 @@ import java.time.LocalDate;
  */
 @Service
 @AllArgsConstructor
-public class ExportServiceService implements IExportEventService {
+public class ExportEventService implements IExportEventService {
     private final ICsvService csvService;
 
     public void exportToCsv(final TypeEvent type) throws IOException {

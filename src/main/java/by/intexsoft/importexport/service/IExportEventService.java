@@ -7,6 +7,7 @@ import java.io.IOException;
 /**
  * Export data of data base in file
  */
+@SuppressWarnings("ALL")
 public interface IExportEventService {
     /**
      * Method create {@link java.io.FileWriter} and send in {@link ICsvService}

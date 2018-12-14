@@ -17,11 +17,10 @@ public interface ICsvService {
      * Method read csv file and convert in {@link List<CSVRecord>}
      *
      * @param csvFile file
-     * @param type    type event
      * @return {@link List<CSVRecord>}
      * @throws IOException
      */
-    List<CSVRecord> readCsvAndConvertToListRecords(Reader csvFile, TypeEvent type) throws IOException;
+    List<CSVRecord> readCsvAndConvertToListRecords(Reader csvFile) throws IOException;
 
     /**
      * writes data of event in file
