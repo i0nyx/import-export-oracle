@@ -6,7 +6,7 @@ import by.intexsoft.importexport.service.ICsvService;
 import by.intexsoft.importexport.service.IImportEventService;
 import lombok.AllArgsConstructor;
 import org.apache.commons.csv.CSVRecord;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * {@inheritDoc}
  */
-@Component
+@Service
 @AllArgsConstructor
 public class ImportEventService implements IImportEventService {
     private final ICsvService csvService;
@@ -23,7 +23,7 @@ public class ImportEventService implements IImportEventService {
 
     @Override
     public void importOfCsv(final String path, final TypeEvent typeEvent) throws IOException {
-        List<CSVRecord> csvRecords = csvService.readCsvAndConvertToListRecords(new FileReader(path), typeEvent);
+        List<CSVRecord> csvRecords = csvService.readCsvAndConvertToListRecords(new FileReader(path));
         convertService.chooseEventService(typeEvent).convertOfCsvRecordToEventAndSave(csvRecords);
     }
 }

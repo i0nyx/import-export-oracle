@@ -1,11 +1,11 @@
 package by.intexsoft.importexport.service.impl;
 
-import by.intexsoft.importexport.service.IEventService;
-import by.intexsoft.importexport.util.CSVUtil;
 import by.intexsoft.importexport.pojo.TypeEvent;
 import by.intexsoft.importexport.service.IConvertService;
+import by.intexsoft.importexport.service.ICsvService;
+import by.intexsoft.importexport.service.IEventService;
+import by.intexsoft.importexport.util.CSVUtil;
 import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -23,14 +23,13 @@ import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_DATE;
 /**
  * {@inheritDoc}
  */
-@Slf4j
 @Service
 @AllArgsConstructor
-public class CsvService implements by.intexsoft.importexport.service.ICsvService {
+public class CsvService implements ICsvService {
     private final IConvertService convertService;
     private final String[] header = {EVENT_FIELD_CODE, EVENT_FIELD_DATE};
 
-    public List<CSVRecord> readCsvAndConvertToListRecords(final Reader csvFile, final TypeEvent type) throws IOException {
+    public List<CSVRecord> readCsvAndConvertToListRecords(final Reader csvFile) throws IOException {
         CSVFormat format = CSVFormat.DEFAULT.withHeader(header).withSkipHeaderRecord(true);
         CSVParser parser = new CSVParser(csvFile, format);
         return parser.getRecords();

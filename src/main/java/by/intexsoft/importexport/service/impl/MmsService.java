@@ -1,8 +1,8 @@
 package by.intexsoft.importexport.service.impl;
 
-import by.intexsoft.importexport.pojo.Sms;
+import by.intexsoft.importexport.pojo.Mms;
 import by.intexsoft.importexport.pojo.TypeEvent;
-import by.intexsoft.importexport.repository.SmsRepository;
+import by.intexsoft.importexport.repository.MmsRepository;
 import by.intexsoft.importexport.service.IEventService;
 import by.intexsoft.importexport.util.StringUtil;
 import lombok.AllArgsConstructor;
@@ -27,60 +27,60 @@ import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_DATE;
 @Service
 @Transactional
 @AllArgsConstructor
-public class SmsServiceI implements IEventService<Sms> {
-    private final SmsRepository smsRepository;
+public class MmsService implements IEventService<Mms> {
+    private final MmsRepository mmsRepository;
 
     @Override
-    public List<Sms> getAll() {
-        return smsRepository.findAll();
+    public void saveList(final List<Mms> list) {
+        mmsRepository.saveAll(list);
+        log.info("saveList mms {}", list);
     }
 
     @Override
-    public void saveList(final List<Sms> list) {
-        smsRepository.saveAll(list);
-        log.info("saveList sms {}", list);
-    }
-
-    @Override
-    public void save(final Sms sms) {
-        Optional.ofNullable(sms).orElseThrow(() -> new IllegalArgumentException("Sms should not be null"));
-        smsRepository.save(sms);
-        log.info("save sms {}", sms);
+    public void save(final Mms mms) {
+        Optional.ofNullable(mms).orElseThrow(() -> new IllegalArgumentException("Mms should not be null"));
+        mmsRepository.save(mms);
+        log.info("save mms {}", mms);
     }
 
     @Override
     public TypeEvent getType() {
-        return TypeEvent.SMS;
+        return TypeEvent.MMS;
     }
 
     @Override
     public void clearTable() {
-        smsRepository.deleteAll();
-        log.info("clear sms table success");
+        mmsRepository.deleteAll();
+        log.info("truncate mms table success");
+    }
+
+    @Override
+    public List<Mms> getAll() {
+        return mmsRepository.findAll();
     }
 
     @Override
     public void convertOfCsvRecordToEventAndSave(final List<CSVRecord> list) {
         Optional.ofNullable(list).orElseThrow(() -> new IllegalArgumentException("List<CSVRecords> should not be null!"));
         saveList(list.stream()
-                .filter(record -> smsRepository.findSmsByCode(record.get(EVENT_FIELD_CODE)) == null)
+                .filter(record -> mmsRepository.findMmsByCode(record.get(EVENT_FIELD_CODE)) == null)
                 .map(this::buildEventByTypeOfCsvRecord)
                 .collect(Collectors.toList()));
     }
 
     @Override
-    public Sms buildEventByTypeOfCsvRecord(final CSVRecord record) {
+    public Mms buildEventByTypeOfCsvRecord(final CSVRecord record) {
         Optional.ofNullable(record).orElseThrow(() -> new IllegalArgumentException("should not be null"));
-        return Sms.builder().code(UUID.fromString(record.get(EVENT_FIELD_CODE)).toString())
+        return Mms.builder().code(UUID.fromString(record.get(EVENT_FIELD_CODE)).toString())
                 .date(LocalDate.parse(record.get(EVENT_FIELD_DATE)))
                 .build();
     }
 
     @Override
-    public Sms buildEventByType(String code, final LocalDate localDate) {
+    public Mms buildEventByType(String code, LocalDate localDate) {
         if (!StringUtil.checkString(code)) {
             code = UUID.randomUUID().toString();
         }
-        return Sms.builder().code(code).date(localDate).build();
+        return Mms.builder().code(code).date(localDate).build();
     }
 }
