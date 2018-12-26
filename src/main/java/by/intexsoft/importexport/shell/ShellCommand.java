@@ -57,7 +57,9 @@ public class ShellCommand implements CommandMarker {
      * @see #exportService
      */
     @CliCommand(value = "export", help = "export events of database")
-    public String exportToCsv(@CliOption(key = {"e"}, mandatory = true, help = "specify event type for export") final String eventType) throws IOException {
+    public String exportToCsv(@CliOption(key = {"e"}, mandatory = true, help = "specify event type for export") final String eventType,
+                              @CliOption(key = {"google"}, help = "save data in google drive") final boolean b) throws IOException {
+        log.info("google is " + b);
         if (StringUtil.checkTypeEvent(eventType)) {
             exportService.exportToCsv(TypeEvent.valueOf(eventType));
             return "export success";
