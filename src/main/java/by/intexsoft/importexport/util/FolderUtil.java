@@ -1,19 +1,15 @@
 package by.intexsoft.importexport.util;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 
-@Slf4j
 public final class FolderUtil {
-    public static void createIfExist(final File file){
-        log.info("CHECK FOLDER: " + file.getAbsolutePath());
+    public static boolean createIfExist(final File file) {
         if (!file.exists()) {
             file.mkdirs();
-            log.warn("Created Folder: " + file.getAbsolutePath());
-            log.warn("Copy file " + file + " into folder above.. and rerun this class!!");
+            return false;
         }
+        return true;
     }
 
     public static File checkFile(final File folder, final String fileName) throws FileNotFoundException {

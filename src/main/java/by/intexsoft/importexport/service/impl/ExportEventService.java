@@ -21,6 +21,5 @@ public class ExportEventService implements IExportEventService {
 
     public void exportToCsv(final TypeEvent type, boolean b) throws IOException, GeneralSecurityException {
             csvService.writeCsv(type, b);
-
     }
 }
