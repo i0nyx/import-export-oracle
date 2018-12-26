@@ -22,28 +22,20 @@ import java.security.GeneralSecurityException;
 import java.util.Collections;
 import java.util.List;
 
-import static by.intexsoft.importexport.constant.Constant.APPLICATION_NAME;
-import static by.intexsoft.importexport.constant.Constant.CLIENT_SECRET_FILE_NAME;
-import static by.intexsoft.importexport.util.FolderUtil.createIfExist;
+import static by.intexsoft.importexport.constant.Constant.*;
+import static by.intexsoft.importexport.util.FolderUtil.checkFile;
 
 @Slf4j
 @Service
 public class GoogleService implements IGoogleService {
     private static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-    private static final File CREDENTIALS_FOLDER = new File(System.getProperty("user.home"), "credentials");
+    private static final File CREDENTIALS_FOLDER = new File(System.getProperty(USER_FOLDER), CREDENTIAL_FOLDER);
     private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE);
-    private static final String USER_ROLE = "user";
-    private static final String ACCESS_TYPE = "offline";
     private static NetHttpTransport netHttpTransport;
 
     @Override
     public Credential getCredential(final NetHttpTransport netHttpTransport) throws IOException {
-        createIfExist(CREDENTIALS_FOLDER);
-        File clientSecretFilePath = new File(CREDENTIALS_FOLDER, CLIENT_SECRET_FILE_NAME);
-        if (!clientSecretFilePath.exists()) {
-            throw new FileNotFoundException("Please copy " + CLIENT_SECRET_FILE_NAME
-                    + " to folder: " + CREDENTIALS_FOLDER.getAbsolutePath());
-        }
+        File clientSecretFilePath = checkFile(CREDENTIALS_FOLDER, CLIENT_SECRET_FILE_NAME);
         InputStream in = new FileInputStream(clientSecretFilePath);
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow
@@ -69,14 +61,14 @@ public class GoogleService implements IGoogleService {
     }
 
     @Override
-    public void createAndSaveFileInGoogleDrive(String googleFolderIdParent, String contentType,
-                                        String fileName, byte[] uploadData) throws IOException, GeneralSecurityException {
+    public void createAndSaveFileInGoogleDrive(final String googleFolderIdParent, final String contentType,
+                                               final String fileName, final byte[] uploadData) throws IOException, GeneralSecurityException {
         AbstractInputStreamContent uploadStreamContent = new ByteArrayContent(contentType, uploadData);
-        createGoogleFile(googleFolderIdParent, contentType, fileName, uploadStreamContent);
+        createGoogleFile(googleFolderIdParent, fileName, uploadStreamContent);
     }
 
-    private void createGoogleFile(String googleFolderIdParent, String contentType,
-                                  String fileName, AbstractInputStreamContent uploadStreamContent) throws IOException, GeneralSecurityException {
+    private void createGoogleFile(final String googleFolderIdParent, final String fileName,
+                                  final AbstractInputStreamContent uploadStreamContent) throws IOException, GeneralSecurityException {
         com.google.api.services.drive.model.File fileMetadata = new com.google.api.services.drive.model.File();
         fileMetadata.setName(fileName);
         List<String> parents = Collections.singletonList(googleFolderIdParent);

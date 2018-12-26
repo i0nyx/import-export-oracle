@@ -1,10 +1,7 @@
 package by.intexsoft.importexport.shell;
 
 import by.intexsoft.importexport.pojo.TypeEvent;
-import by.intexsoft.importexport.service.IConvertService;
-import by.intexsoft.importexport.service.IExportEventService;
-import by.intexsoft.importexport.service.IGenerateDataService;
-import by.intexsoft.importexport.service.IImportEventService;
+import by.intexsoft.importexport.service.*;
 import by.intexsoft.importexport.util.StringUtil;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,8 +10,13 @@ import org.springframework.shell.core.annotation.CliCommand;
 import org.springframework.shell.core.annotation.CliOption;
 import org.springframework.stereotype.Component;
 
+import java.io.File;
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 import java.text.ParseException;
+
+import static by.intexsoft.importexport.constant.Constant.*;
+import static by.intexsoft.importexport.util.FolderUtil.createIfExist;
 
 /**
  * A class that describes commands for working with the command line
@@ -28,6 +30,7 @@ public class ShellCommand implements CommandMarker {
     private final IExportEventService exportService;
     private final IConvertService convertService;
     private final IGenerateDataService generateDataService;
+    private final IGoogleService googleService;
 
     /**
      * Method that describes the command to import data from a file into the database
@@ -58,10 +61,9 @@ public class ShellCommand implements CommandMarker {
      */
     @CliCommand(value = "export", help = "export events of database")
     public String exportToCsv(@CliOption(key = {"e"}, mandatory = true, help = "specify event type for export") final String eventType,
-                              @CliOption(key = {"google"}, help = "save data in google drive") final boolean b) throws IOException {
-        log.info("google is " + b);
+                              @CliOption(key = {"google"}, unspecifiedDefaultValue = "false", help = "save data in google drive") final boolean b) throws IOException, GeneralSecurityException {
         if (StringUtil.checkTypeEvent(eventType)) {
-            exportService.exportToCsv(TypeEvent.valueOf(eventType));
+            exportService.exportToCsv(TypeEvent.valueOf(eventType.toUpperCase()), b);
             return "export success";
         }
         return "export false";
@@ -104,5 +106,12 @@ public class ShellCommand implements CommandMarker {
             return "generate data success";
         }
         return "generate data false";
+    }
+
+    @CliCommand(value = "google", help = "create CREDENTIAL and check that file 'client_secret.json' exists")
+    public void checkGoogleCredential() {
+        File credentialFolder = new File(System.getProperty(USER_FOLDER), CREDENTIAL_FOLDER);
+        File clientSecretFilePath = new File(credentialFolder, CLIENT_SECRET_FILE_NAME);
+        createIfExist(clientSecretFilePath);
     }
 }

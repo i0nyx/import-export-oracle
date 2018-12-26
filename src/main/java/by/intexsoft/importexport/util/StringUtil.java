@@ -4,6 +4,7 @@ import by.intexsoft.importexport.pojo.TypeEvent;
 import by.intexsoft.importexport.pojo.TypeExtension;
 
 import java.io.File;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -50,5 +51,9 @@ public final class StringUtil {
 
     public static boolean checkString(final String str){
         return !isNull(str) && !str.isEmpty();
+    }
+
+    public static String createFileName(final TypeEvent type){
+        return String.format("%s_%s.csv", type.toString(), LocalDate.now());
     }
 }

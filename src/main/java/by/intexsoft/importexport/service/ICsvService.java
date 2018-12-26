@@ -3,9 +3,9 @@ package by.intexsoft.importexport.service;
 import by.intexsoft.importexport.pojo.TypeEvent;
 import org.apache.commons.csv.CSVRecord;
 
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Reader;
+import java.security.GeneralSecurityException;
 import java.util.List;
 
 /**
@@ -25,9 +25,8 @@ public interface ICsvService {
     /**
      * writes data of event in file
      *
-     * @param writer    file
      * @param typeEvent event type
      * @throws IOException
      */
-    void writeCsv(FileWriter writer, final TypeEvent typeEvent) throws IOException;
+    void writeCsv(TypeEvent typeEvent, boolean b) throws IOException, GeneralSecurityException;
 }

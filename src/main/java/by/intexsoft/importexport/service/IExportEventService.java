@@ -3,6 +3,7 @@ package by.intexsoft.importexport.service;
 import by.intexsoft.importexport.pojo.TypeEvent;
 
 import java.io.IOException;
+import java.security.GeneralSecurityException;
 
 /**
  * Export data of data base in file
@@ -15,5 +16,5 @@ public interface IExportEventService {
      * @param type event type
      * @throws IOException
      */
-    void exportToCsv(final TypeEvent type) throws IOException;
+    void exportToCsv(TypeEvent type, boolean b) throws IOException, GeneralSecurityException;
 }
