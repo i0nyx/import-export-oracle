@@ -12,6 +12,8 @@ import java.time.LocalDate;
 @Table
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Sms extends Event {
     @Id
@@ -22,3 +24,4 @@ public class Sms extends Event {
     @Column(name = "dates")
     private LocalDate date;
 }
+
