@@ -27,7 +27,7 @@ import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_DATE;
 @Service
 @Transactional
 @AllArgsConstructor
-public class CallServiceI implements IEventService<Call> {
+public class CallService implements IEventService<Call> {
     private final CallRepository callRepository;
 
     @Override

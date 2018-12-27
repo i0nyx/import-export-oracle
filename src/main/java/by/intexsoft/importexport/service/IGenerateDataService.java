@@ -7,15 +7,15 @@ import java.text.ParseException;
 /**
  * Generate data for table
  */
-@SuppressWarnings("JavaDoc")
 public interface IGenerateDataService {
     /**
      * Method generate data for table by special type
-     * @param type event type
+     *
+     * @param type      event type
      * @param startYear initial value
-     * @param endYear end value
-     * @param count count data
-     * @throws ParseException
+     * @param endYear   end value
+     * @param count     count data
+     * @throws ParseException opportunity to get an exception
      */
     void generateDataByType(final TypeEvent type, final String startYear, final String endYear, Integer count) throws ParseException;
 }

@@ -32,7 +32,7 @@ public interface IEventService<T extends Event> {
     /**
      * Method get all events of table
      *
-     * @return {@link List<Event>}
+     * @return {@link List<T>}
      */
     List<T> getAll();
 
@@ -78,7 +78,7 @@ public interface IEventService<T extends Event> {
      * @param events list events
      * @return {@link List<String>}
      */
-    default List<List<String>> convertToListString(final List<T> events) {
+    default List convertToListString(final List<T> events) {
         List<List<String>> listStr = newArrayList();
         events.forEach(event -> {
             List<String> strings = newArrayList();

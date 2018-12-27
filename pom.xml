@@ -6,13 +6,14 @@
 
     <groupId>by.intexsoft</groupId>
     <artifactId>import_export</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>import_export.0.1</version>
     <packaging>jar</packaging>
 
     <properties>
         <spring.version>5.1.1.RELEASE</spring.version>
         <spring.data.version>2.1.2.RELEASE</spring.data.version>
         <hibernate.version>5.3.7.Final</hibernate.version>
+        <google.version>1.27.0</google.version>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -80,13 +81,29 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
-            <version>1.7.5</version>
+            <version>1.7.25</version>
         </dependency>
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.3.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-drive</artifactId>
+            <version>v3-rev136-1.25.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>${google.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.oauth-client</groupId>
+            <artifactId>google-oauth-client-jetty</artifactId>
+            <version>${google.version}</version>
         </dependency>
     </dependencies>
 
@@ -118,6 +135,7 @@
             <version>1.8.1</version>
             <executions>
                 <execution>
+                    <phase>package</phase>
                     <goals>
                         <goal>assemble</goal>
                     </goals>
@@ -127,8 +145,17 @@
                 <programs>
                     <program>
                         <mainClass>org.springframework.shell.Bootstrap</mainClass>
+                        <name>import-export</name>
                     </program>
                 </programs>
+                <showConsoleWindow>true</showConsoleWindow>
+                <binFileExtensions>
+                    <unix>.sh</unix>
+                </binFileExtensions>
+                <platforms>
+                    <platform>unix</platform>
+                    <platform>windows</platform>
+                </platforms>
             </configuration>
             </plugin>
         </plugins>
