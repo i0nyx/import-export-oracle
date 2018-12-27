@@ -25,6 +25,9 @@ import java.util.List;
 import static by.intexsoft.importexport.constant.Constant.*;
 import static by.intexsoft.importexport.util.FolderUtil.checkFile;
 
+/**
+ * {@inheritDoc}
+ */
 @Slf4j
 @Service
 public class GoogleService implements IGoogleService {
