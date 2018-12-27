@@ -12,6 +12,8 @@ import java.time.LocalDate;
 @Table
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Mms extends Event {
     @Id

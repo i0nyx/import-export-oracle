@@ -8,14 +8,13 @@ import java.util.List;
 /**
  * Import data in data base
  */
-@SuppressWarnings("JavaDoc")
 public interface IImportEventService {
     /**
      * Read file and convert data in {@link List <org.apache.commons.csv.CSVRecord>} and send in {@link IEventService}
      *
      * @param path      path to file
      * @param typeEvent event type
-     * @throws IOException
+     * @throws IOException opportunity to get an exception
      */
     void importOfCsv(final String path, final TypeEvent typeEvent) throws IOException;
 }
