@@ -135,6 +135,7 @@
             <version>1.8.1</version>
             <executions>
                 <execution>
+                    <phase>package</phase>
                     <goals>
                         <goal>assemble</goal>
                     </goals>
@@ -144,8 +145,17 @@
                 <programs>
                     <program>
                         <mainClass>org.springframework.shell.Bootstrap</mainClass>
+                        <name>import-export</name>
                     </program>
                 </programs>
+                <showConsoleWindow>true</showConsoleWindow>
+                <binFileExtensions>
+                    <unix>.sh</unix>
+                </binFileExtensions>
+                <platforms>
+                    <platform>unix</platform>
+                    <platform>windows</platform>
+                </platforms>
             </configuration>
             </plugin>
         </plugins>
