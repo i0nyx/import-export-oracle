@@ -36,12 +36,14 @@ public class CsvService implements ICsvService {
     private final IGoogleService googleService;
     private final String[] header = {EVENT_FIELD_CODE, EVENT_FIELD_DATE};
 
+    @Override
     public List<CSVRecord> readCsvAndConvertToListRecords(final Reader csvFile) throws IOException {
         CSVFormat format = CSVFormat.DEFAULT.withHeader(header).withSkipHeaderRecord(true);
         CSVParser parser = new CSVParser(csvFile, format);
         return parser.getRecords();
     }
 
+    @Override
     public void writeCsv(final TypeEvent typeEvent, final boolean bool) throws IOException, GeneralSecurityException {
 
         FileWriter writer = new FileWriter(PATH_FOR_SAVE.concat(createFileName(typeEvent)));

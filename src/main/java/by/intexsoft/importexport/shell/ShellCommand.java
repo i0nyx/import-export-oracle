@@ -23,7 +23,6 @@ import static by.intexsoft.importexport.util.FolderUtil.createIfExist;
  */
 @Slf4j
 @Component
-@SuppressWarnings("JavaDoc")
 @AllArgsConstructor
 public class ShellCommand implements CommandMarker {
     private final IImportEventService importService;
@@ -37,7 +36,7 @@ public class ShellCommand implements CommandMarker {
      *
      * @param path specifies the path to the imported file
      * @return {@link String} message about successful or not successful import
-     * @throws IOException
+     * @throws IOException opportunity to get an exception
      * @see #importService
      */
     @CliCommand(value = "import", help = "import events to database")
@@ -56,7 +55,7 @@ public class ShellCommand implements CommandMarker {
      *
      * @param eventType exported event
      * @return {@link String} message about successful or not successful export
-     * @throws IOException
+     * @throws IOException opportunity to get an exception
      * @see #exportService
      */
     @CliCommand(value = "export", help = "export events of database")
@@ -91,9 +90,9 @@ public class ShellCommand implements CommandMarker {
      * @param eventType type event for specified table
      * @param startYear initial value
      * @param endYear   end value
-     * @param count
+     * @param count     count of data
      * @return {@link String} message about successful or not successful generate data
-     * @throws ParseException
+     * @throws ParseException opportunity to get an exception
      * @see #generateDataService
      */
     @CliCommand(value = "generate", help = "generate data to table by type")
@@ -108,10 +107,17 @@ public class ShellCommand implements CommandMarker {
         return "generate data false";
     }
 
+    /**
+     * Method check exists folder and secret file, and authorized in google
+     *
+     * @return {@link String} message for console
+     * @throws GeneralSecurityException opportunity to get an exception
+     * @throws IOException              opportunity to get an exception
+     */
     @CliCommand(value = "google", help = "create CREDENTIAL and check that file 'client_secret.json' exists")
     public String checkGoogleCredential() throws GeneralSecurityException, IOException {
         File credentialFolder = new File(System.getProperty(USER_FOLDER), CREDENTIAL_FOLDER);
-        if(!createIfExist(credentialFolder)){
+        if (!createIfExist(credentialFolder)) {
             return "Created Folder: " + credentialFolder.getAbsolutePath() +
                     " Copy file " + CLIENT_SECRET_FILE_NAME + " into folder above.. and rerun this command!!";
         }
