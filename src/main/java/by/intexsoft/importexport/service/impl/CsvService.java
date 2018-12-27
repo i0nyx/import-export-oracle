@@ -22,8 +22,7 @@ import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
 
-import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_CODE;
-import static by.intexsoft.importexport.constant.Constant.EVENT_FIELD_DATE;
+import static by.intexsoft.importexport.constant.Constant.*;
 import static by.intexsoft.importexport.util.StringUtil.createFileName;
 
 /**
@@ -36,7 +35,6 @@ public class CsvService implements ICsvService {
     private final IConvertService convertService;
     private final IGoogleService googleService;
     private final String[] header = {EVENT_FIELD_CODE, EVENT_FIELD_DATE};
-    private static final String CONTENT_TYPE = "text/plain";
 
     public List<CSVRecord> readCsvAndConvertToListRecords(final Reader csvFile) throws IOException {
         CSVFormat format = CSVFormat.DEFAULT.withHeader(header).withSkipHeaderRecord(true);
@@ -45,7 +43,8 @@ public class CsvService implements ICsvService {
     }
 
     public void writeCsv(final TypeEvent typeEvent, final boolean bool) throws IOException, GeneralSecurityException {
-        FileWriter writer = new FileWriter("D:/"+ createFileName(typeEvent));
+
+        FileWriter writer = new FileWriter(PATH_FOR_SAVE.concat(createFileName(typeEvent)));
         CSVUtil.writeLine(writer, Arrays.asList(header));
         IEventService eventService = convertService.chooseEventService(typeEvent);
         eventService.convertToListString(eventService.getAll()).forEach(list ->
@@ -53,7 +52,7 @@ public class CsvService implements ICsvService {
         );
         closeWriter(writer);
         if(bool) {
-            byte[] bytes = Files.readAllBytes(Paths.get(String.valueOf(writer)));
+            byte[] bytes = Files.readAllBytes(Paths.get(PATH_FOR_SAVE.concat(createFileName(typeEvent))));
             googleService.createAndSaveFileInGoogleDrive(null, CONTENT_TYPE, createFileName(typeEvent), bytes);
         }
     }

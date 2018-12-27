@@ -111,8 +111,7 @@ public class ShellCommand implements CommandMarker {
     @CliCommand(value = "google", help = "create CREDENTIAL and check that file 'client_secret.json' exists")
     public String checkGoogleCredential() throws GeneralSecurityException, IOException {
         File credentialFolder = new File(System.getProperty(USER_FOLDER), CREDENTIAL_FOLDER);
-        File clientSecretFilePath = new File(credentialFolder, CLIENT_SECRET_FILE_NAME);
-        if(!createIfExist(clientSecretFilePath)){
+        if(!createIfExist(credentialFolder)){
             return "Created Folder: " + credentialFolder.getAbsolutePath() +
                     " Copy file " + CLIENT_SECRET_FILE_NAME + " into folder above.. and rerun this command!!";
         }

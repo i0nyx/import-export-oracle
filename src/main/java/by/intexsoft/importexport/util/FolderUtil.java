@@ -4,9 +4,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public final class FolderUtil {
-    public static boolean createIfExist(final File file) {
-        if (!file.exists()) {
-            file.mkdirs();
+    public static boolean createIfExist(final File folder) {
+        if (!folder.exists()) {
+            folder.mkdirs();
             return false;
         }
         return true;
