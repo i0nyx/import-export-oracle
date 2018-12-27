@@ -15,4 +15,5 @@ public abstract class Constant {
     public static final String USER_ROLE = "user";
     public static final String ACCESS_TYPE = "offline";
     public static final String CONTENT_TYPE = "text/plain";
+    public static final String DRIVE_FIELDS = "id, webContentLink, webViewLink, parents";
 }

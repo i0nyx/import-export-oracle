@@ -34,7 +34,7 @@ public class GoogleService implements IGoogleService {
     private static final JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
     private static final File CREDENTIALS_FOLDER = new File(System.getProperty(USER_FOLDER), CREDENTIAL_FOLDER);
     private static final List<String> SCOPES = Collections.singletonList(DriveScopes.DRIVE);
-    private static NetHttpTransport netHttpTransport;
+    private NetHttpTransport netHttpTransport;
 
     @Override
     public Credential getCredential(final NetHttpTransport netHttpTransport) throws IOException {
@@ -68,6 +68,7 @@ public class GoogleService implements IGoogleService {
                                                final String fileName, final byte[] uploadData) throws IOException, GeneralSecurityException {
         AbstractInputStreamContent uploadStreamContent = new ByteArrayContent(contentType, uploadData);
         createGoogleFile(googleFolderIdParent, fileName, uploadStreamContent);
+        log.info("File %s save in google drive", fileName);
     }
 
     private void createGoogleFile(final String googleFolderIdParent, final String fileName,
@@ -79,7 +80,7 @@ public class GoogleService implements IGoogleService {
         Drive driveService = createGoogleDriveService();
         driveService.files()
                 .create(fileMetadata, uploadStreamContent)
-                .setFields("id, webContentLink, webViewLink, parents")
+                .setFields(DRIVE_FIELDS)
                 .execute();
     }
 

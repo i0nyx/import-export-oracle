@@ -45,7 +45,6 @@ public class CsvService implements ICsvService {
 
     @Override
     public void writeCsv(final TypeEvent typeEvent, final boolean bool) throws IOException, GeneralSecurityException {
-
         FileWriter writer = new FileWriter(PATH_FOR_SAVE.concat(createFileName(typeEvent)));
         CSVUtil.writeLine(writer, Arrays.asList(header));
         IEventService eventService = convertService.chooseEventService(typeEvent);
